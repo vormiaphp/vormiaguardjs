@@ -182,11 +182,59 @@ const user = useVrmAuthStore((s) => s.user);
 
 ---
 
-## License
+## Example Usage
 
-MIT
+See runnable example projects:
 
----
+- [SPA Example (React)](./examples/spa/App.jsx)
+- [MPA Example (HTML/JS)](./examples/mpa/index.html)
+
+### Single Page Application (SPA)
+
+```js
+import { useVrmGuard } from "vormiaguardjs";
+
+function App() {
+  const { isAuthenticated, user, login, logout } = useVrmGuard();
+
+  return (
+    <div style={{ padding: 32, fontFamily: "sans-serif" }}>
+      <h1>VormiaGuardJS SPA Example</h1>
+      {isAuthenticated ? (
+        <>
+          <p>Welcome, {user.name}!</p>
+          <button onClick={logout}>Logout</button>
+        </>
+      ) : (
+        <button onClick={login}>Login</button>
+      )}
+    </div>
+  );
+}
+```
+
+### Multi Page Application (MPA)
+
+```js
+import { GuardClient } from "vormiaguardjs";
+
+const guard = new GuardClient({
+  endpoint: "/api/auth",
+});
+
+if (guard.isAuthenticated()) {
+  // Render protected content
+  document.getElementById("app").innerHTML = `Welcome, ${
+    guard.getUser().name
+  }! <button id="logout">Logout</button>`;
+  document.getElementById("logout").onclick = () => guard.logout();
+} else {
+  // Render login button
+  document.getElementById("app").innerHTML =
+    '<button id="login">Login</button>';
+  document.getElementById("login").onclick = () => guard.login();
+}
+```
 
 ## User Guide
 
@@ -235,44 +283,6 @@ You can pass a `middleware` prop to target a specific Laravel middleware for bac
   <AdminDashboard />
 </VrmGuard>
 ```
-
----
-
-### Laravel Backend: can-access Endpoint Example
-
-Add this route to your Laravel backend to support backend-driven access checks:
-
-```php
-// routes/api.php
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-
-Route::middleware('auth:sanctum')->get('/can-access', function (Request $request) {
-    $user = $request->user();
-    $route = $request->query('route');
-    $middleware = $request->query('middleware');
-
-    // Example: check role middleware
-    if ($middleware && str_starts_with($middleware, 'role:')) {
-        $role = explode(':', $middleware)[1];
-        if (!$user->hasRole($role)) {
-            return response()->json(['allowed' => false], 403);
-        }
-    }
-
-    // Example: check route access (customize as needed)
-    if ($route && !$user->canAccessRoute($route)) {
-        return response()->json(['allowed' => false], 403);
-    }
-
-    return response()->json(['allowed' => true]);
-});
-```
-
-- Adjust the logic to match your app's authorization needs.
-- You can check roles, permissions, or any custom logic.
-
----
 
 ### SSR/SEO/MPA Support
 
@@ -390,36 +400,10 @@ export default function AdminPage() {
 
 ---
 
-For more, see the [examples/](./examples/) directory for full app samples.
+## License
 
-### Laravel Backend: VormiaGuardPHP Example
+MIT License
 
-To enable secure backend-driven access control, install and configure [VormiaGuardPHP](https://github.com/vormiaphp/vormiaguardphp) in your Laravel project:
+Copyright (c) 2025 Vormia
 
-```bash
-composer require vormiaphp/vormiaguardphp
-php artisan vormiaguard:install
-```
-
-Then, register the VormiaGuardPHP routes in your `routes/api.php`:
-
-```php
-use VormiaGuardPhp\Http\Controllers\UserController;
-use VormiaGuardPhp\Http\Controllers\AccessController;
-
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/user', [UserController::class, 'show']);
-    Route::get('/can-access', [AccessController::class, 'canAccess']);
-});
-```
-
-And register the middleware in your `app/Http/Kernel.php`:
-
-```php
-protected $routeMiddleware = [
-    // ...
-    'checkrole' => \VormiaGuardPhp\Http\Middleware\CheckRole::class,
-];
-```
-
-VormiaGuardPHP provides the `/api/user` and `/api/can-access` endpoints and guard middleware required for VormiaGuardJS to function securely with your Laravel backend.
+---

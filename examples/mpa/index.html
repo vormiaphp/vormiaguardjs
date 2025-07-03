@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VormiaGuardJS MPA Example</title>
+  </head>
+  <body>
+    <div id="app" style="padding: 32px; font-family: sans-serif"></div>
+    <script type="module">
+      import { GuardClient } from "vormiaguardjs";
+      const guard = new GuardClient({ endpoint: "/api/auth" });
+      function render() {
+        if (guard.isAuthenticated()) {
+          document.getElementById("app").innerHTML = `Welcome, ${
+            guard.getUser().name
+          }! <button id="logout">Logout</button>`;
+          document.getElementById("logout").onclick = () => {
+            guard.logout();
+            render();
+          };
+        } else {
+          document.getElementById("app").innerHTML =
+            '<button id="login">Login</button>';
+          document.getElementById("login").onclick = () => {
+            guard.login();
+            render();
+          };
+        }
+      }
+      render();
+    </script>
+  </body>
+</html>
