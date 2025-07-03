@@ -30,9 +30,35 @@ VormiaGuardJS is designed to work seamlessly with Laravel backends, but secure a
 
 ## Installation
 
+Install VormiaGuardJS and its peer dependencies:
+
 ```bash
-npm install vormiaguardjs vormiaqueryjs
+npm install vormiaguardjs
+npm install vormiaqueryjs
+npm install zustand
 ```
+
+> **Note:**
+>
+> - `vormiaqueryjs` is a required peer dependency.
+> - This package uses [Zustand](https://github.com/pmndrs/zustand) for state management.
+
+---
+
+## Laravel Integration
+
+If you are using Laravel, check out the official VormiaGuard PHP package for backend integration:
+
+- [vormiaphp/vormiaguardphp on GitHub](https://github.com/vormiaphp/vormiaguardphp)
+
+---
+
+## Complete Installation and Usage Instructions
+
+For full documentation and usage examples, visit:
+
+- [GitHub Repository](https://github.com/your-org/vormiaguardjs) <!-- Replace with actual repo if different -->
+- [Packagist Package](https://packagist.org/packages/your-org/vormiaguardjs) <!-- Replace with actual package if applicable -->
 
 ---
 
