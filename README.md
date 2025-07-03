@@ -16,13 +16,6 @@ VormiaGuardJS is designed to work seamlessly with Laravel backends, but secure a
 > **Laravel Users:**
 > If you are using Laravel, check out the official VormiaGuard PHP package for backend integration:
 
-> For backend setup, route registration, and middleware configuration, see the [VormiaGuardPHP README](https://github.com/vormiaphp/vormiaguardphp#readme) for complete instructions.
-
-For full documentation and usage examples, visit:
-
-- [GitHub Repository](https://github.com/your-org/vormiaguardjs) <!-- Replace with actual repo if different -->
-- [Packagist Package](https://packagist.org/packages/your-org/vormiaguardjs) <!-- Replace with actual package if applicable -->
-
 ---
 
 - Maintains Laravel session via Sanctum (cookies)
@@ -32,6 +25,13 @@ For full documentation and usage examples, visit:
 - Uses [VormiaQueryJS](https://www.npmjs.com/package/vormiaqueryjs) for all API calls
 
 ---
+
+> For backend setup, route registration, and middleware configuration, see the [VormiaGuardPHP README](https://github.com/vormiaphp/vormiaguardphp#readme) for complete instructions.
+
+For full documentation and usage examples, visit:
+
+- [GitHub Repository](https://github.com/vormiaphp/vormiaguardphp) <!-- Replace with actual repo if different -->
+- [Packagist Package](https://packagist.org/packages/vormiaphp/vormiaguardphp) <!-- Replace with actual package if applicable -->
 
 ## Installation
 
