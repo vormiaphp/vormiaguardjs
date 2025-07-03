@@ -1,0 +1,45 @@
+{
+  "name": "vormiaguardjs",
+  "version": "1.0.0",
+  "description": "Vormia Guard JS - A npm package for authentication and guard management with VormiaPHP laravel Backend application",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "vormia",
+    "vormiaguard",
+    "auth",
+    "guard",
+    "laravel",
+    "authentication",
+    "api"
+  ],
+  "homepage": "https://github.com/vormiaphp/vormiaguardjs#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vormiaphp/vormiaguardjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vormiaphp/vormiaguardjs/issues"
+  },
+  "author": "vormiateam",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@tanstack/react-query": "^5.81.5",
+    "axios": "^1.10.0",
+    "vormiaqueryjs": "^1.3.0",
+    "zustand": "^5.0.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
