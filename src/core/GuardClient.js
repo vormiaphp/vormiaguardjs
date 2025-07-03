@@ -1,8 +1,5 @@
 // Core GuardClient for VormiaGuardJS
-import {
-  getGlobalVormiaClient,
-  createVormiaClient,
-} from "vormiaqueryjs/src/client/createVormiaClient";
+import { getGlobalVormiaClient, createVormiaClient } from "vormiaqueryjs";
 
 let globalGuardClient = null;
 
