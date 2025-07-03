@@ -4,8 +4,6 @@
 
 ---
 
-## Why VormiaGuardPHP?
-
 VormiaGuardJS is designed to work seamlessly with Laravel backends, but secure access control requires backend support for:
 
 - Authenticated user info (`/api/user`)
@@ -16,7 +14,14 @@ VormiaGuardJS is designed to work seamlessly with Laravel backends, but secure a
 **VormiaGuardPHP** is the official Laravel backend package that provides these endpoints and middleware. It ensures your frontend and backend are fully integrated for secure, role-based access control. If you use VormiaGuardJS with Laravel, install VormiaGuardPHP for best results.
 
 > **Laravel Users:**
+> If you are using Laravel, check out the official VormiaGuard PHP package for backend integration:
+
 > For backend setup, route registration, and middleware configuration, see the [VormiaGuardPHP README](https://github.com/vormiaphp/vormiaguardphp#readme) for complete instructions.
+
+For full documentation and usage examples, visit:
+
+- [GitHub Repository](https://github.com/your-org/vormiaguardjs) <!-- Replace with actual repo if different -->
+- [Packagist Package](https://packagist.org/packages/your-org/vormiaguardjs) <!-- Replace with actual package if applicable -->
 
 ---
 
@@ -42,23 +47,6 @@ npm install zustand
 >
 > - `vormiaqueryjs` is a required peer dependency.
 > - This package uses [Zustand](https://github.com/pmndrs/zustand) for state management.
-
----
-
-## Laravel Integration
-
-If you are using Laravel, check out the official VormiaGuard PHP package for backend integration:
-
-- [vormiaphp/vormiaguardphp on GitHub](https://github.com/vormiaphp/vormiaguardphp)
-
----
-
-## Complete Installation and Usage Instructions
-
-For full documentation and usage examples, visit:
-
-- [GitHub Repository](https://github.com/your-org/vormiaguardjs) <!-- Replace with actual repo if different -->
-- [Packagist Package](https://packagist.org/packages/your-org/vormiaguardjs) <!-- Replace with actual package if applicable -->
 
 ---
 
