@@ -2,6 +2,24 @@
 
 **Laravel Sanctum-compatible frontend access control for React, Vue, Svelte, Qwik, Astro, and Solid.**
 
+---
+
+## Why VormiaGuardPHP?
+
+VormiaGuardJS is designed to work seamlessly with Laravel backends, but secure access control requires backend support for:
+
+- Authenticated user info (`/api/user`)
+- Role and permission checks
+- Backend-driven access control (`/api/can-access`)
+- Guard/role middleware
+
+**VormiaGuardPHP** is the official Laravel backend package that provides these endpoints and middleware. It ensures your frontend and backend are fully integrated for secure, role-based access control. If you use VormiaGuardJS with Laravel, install VormiaGuardPHP for best results.
+
+> **Laravel Users:**
+> For backend setup, route registration, and middleware configuration, see the [VormiaGuardPHP README](https://github.com/vormiaphp/vormiaguardphp#readme) for complete instructions.
+
+---
+
 - Maintains Laravel session via Sanctum (cookies)
 - Authenticated user state (`GET /api/user`)
 - Route/component-level access control (roles, user presence)
@@ -359,3 +377,35 @@ export default function AdminPage() {
 ---
 
 For more, see the [examples/](./examples/) directory for full app samples.
+
+### Laravel Backend: VormiaGuardPHP Example
+
+To enable secure backend-driven access control, install and configure [VormiaGuardPHP](https://github.com/vormiaphp/vormiaguardphp) in your Laravel project:
+
+```bash
+composer require vormiaphp/vormiaguardphp
+php artisan vormiaguard:install
+```
+
+Then, register the VormiaGuardPHP routes in your `routes/api.php`:
+
+```php
+use VormiaGuardPhp\Http\Controllers\UserController;
+use VormiaGuardPhp\Http\Controllers\AccessController;
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user', [UserController::class, 'show']);
+    Route::get('/can-access', [AccessController::class, 'canAccess']);
+});
+```
+
+And register the middleware in your `app/Http/Kernel.php`:
+
+```php
+protected $routeMiddleware = [
+    // ...
+    'checkrole' => \VormiaGuardPhp\Http\Middleware\CheckRole::class,
+];
+```
+
+VormiaGuardPHP provides the `/api/user` and `/api/can-access` endpoints and guard middleware required for VormiaGuardJS to function securely with your Laravel backend.
