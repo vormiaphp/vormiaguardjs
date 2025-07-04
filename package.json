@@ -1,6 +1,6 @@
 {
   "name": "vormiaguardjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vormia Guard JS - A npm package for authentication and guard management with VormiaPHP laravel Backend application",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

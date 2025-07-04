@@ -2,6 +2,8 @@
 
 **Laravel Sanctum-compatible frontend access control for React, Vue, Svelte, Qwik, Astro, and Solid.**
 
+<!-- Consider adding badges for npm version, license, and CI status here -->
+
 ---
 
 VormiaGuardJS is designed to work seamlessly with Laravel backends, but secure access control requires backend support for:
@@ -53,8 +55,7 @@ npm install zustand
 ## Quick Start (React SPA)
 
 ```js
-import { createVormiaClient } from "vormiaqueryjs";
-import { createGuardClient } from "vormiaguardjs/src/core/GuardClient";
+import { createVormiaClient, createGuardClient } from "vormiaguardjs";
 
 // 1. Setup VormiaQueryJS client
 createVormiaClient({ baseURL: "http://localhost", withCredentials: true });
@@ -70,7 +71,7 @@ createGuardClient({
 ### Protecting Routes (React)
 
 ```jsx
-import { VrmGuard } from "vormiaguardjs/src/components/VrmGuard";
+import { VrmGuard } from "vormiaguardjs";
 
 <VrmGuard roles={["admin"]} redirectTo="/login">
   <AdminDashboard />
@@ -80,7 +81,7 @@ import { VrmGuard } from "vormiaguardjs/src/components/VrmGuard";
 ### Login/Logout Hooks (React)
 
 ```js
-import { useVrmLogin, useVrmLogout } from "vormiaguardjs/src/hooks/useVrmLogin";
+import { useVrmLogin, useVrmLogout } from "vormiaguardjs";
 
 const { login, isLoading, error } = useVrmLogin({ redirectTo: "/" });
 const { logout } = useVrmLogout({ redirectTo: "/login" });
@@ -90,38 +91,40 @@ const { logout } = useVrmLogout({ redirectTo: "/login" });
 
 ## Multi-Framework Usage
 
+> **Note:** All main exports are available at the root of the package. If you need framework-specific adapters and they are not available at the root, check the documentation or request their export in future releases.
+
 ### Vue
 
 ```js
-import { useVormiaGuard } from "vormiaguardjs/src/adapters/vue/useVormiaGuard";
+import { useVormiaGuard } from "vormiaguardjs";
 const { user, isLoading, isAuthenticated } = useVormiaGuard();
 ```
 
 ### Svelte
 
 ```js
-import { createVormiaGuardStore } from "vormiaguardjs/src/adapters/svelte/vormiaGuardStore";
+import { createVormiaGuardStore } from "vormiaguardjs";
 const { user, isAuthenticated } = createVormiaGuardStore();
 ```
 
 ### Qwik
 
 ```js
-import { useVormiaGuard } from "vormiaguardjs/src/adapters/qwik/useVormiaGuard";
+import { useVormiaGuard } from "vormiaguardjs";
 const { user, isAuthenticated } = useVormiaGuard();
 ```
 
 ### Astro
 
 ```js
-import { useVormiaGuard } from "vormiaguardjs/src/adapters/astro/useVormiaGuard";
+import { useVormiaGuard } from "vormiaguardjs";
 const { user, isAuthenticated } = useVormiaGuard();
 ```
 
 ### Solid
 
 ```js
-import { createVormiaGuardResource } from "vormiaguardjs/src/adapters/solid/createVormiaGuardResource";
+import { createVormiaGuardResource } from "vormiaguardjs";
 const [user, { isAuthenticated }] = createVormiaGuardResource();
 ```
 
@@ -138,7 +141,7 @@ const [user, { isAuthenticated }] = createVormiaGuardResource();
 ## Example: Login Page (React)
 
 ```jsx
-import { useVrmLogin } from "vormiaguardjs/src/hooks/useVrmLogin";
+import { useVrmLogin } from "vormiaguardjs";
 
 function LoginPage() {
   const { login, isLoading, error } = useVrmLogin({ redirectTo: "/" });
@@ -168,7 +171,7 @@ function LoginPage() {
 ## Auth Store (Zustand)
 
 ```js
-import { useVrmAuthStore } from "vormiaguardjs/src/hooks/useVrmAuthStore";
+import { useVrmAuthStore } from "vormiaguardjs";
 const user = useVrmAuthStore((s) => s.user);
 ```
 
@@ -233,168 +236,6 @@ if (guard.isAuthenticated()) {
   document.getElementById("app").innerHTML =
     '<button id="login">Login</button>';
   document.getElementById("login").onclick = () => guard.login();
-}
-```
-
-## User Guide
-
-### Advanced Access Control with Backend Check
-
-You can combine frontend role checks with backend-driven authorization for maximum security and flexibility.
-
-#### Example: Protecting a Route with Backend Check
-
-```jsx
-import { VrmGuard } from "vormiaguardjs/src/components/VrmGuard";
-
-<VrmGuard
-  roles={["admin"]} // Frontend role check (for UX)
-  backendCheck // Enable backend check
-  route="/admin" // Route to check on backend (defaults to current path)
-  middleware="role:admin" // Laravel middleware to check (optional)
->
-  <AdminDashboard />
-</VrmGuard>;
-```
-
-- If `backendCheck` is true, VormiaGuardJS will call your backend to verify access before rendering children.
-- If not allowed, the user is redirected (uses `redirectTo` prop or global config).
-
-#### Global Redirects
-
-You can set a global redirect for failed access in your GuardClient config:
-
-```js
-createGuardClient({
-  apiBaseUrl: "http://localhost",
-  mode: "spa",
-  redirects: { onFail: "/login", onSuccess: "/" },
-});
-```
-
-- The `onFail` value is used if no `redirectTo` is provided to `<VrmGuard>`.
-
-#### Targeting Specific Middleware
-
-You can pass a `middleware` prop to target a specific Laravel middleware for backend checks:
-
-```jsx
-<VrmGuard backendCheck route="/admin" middleware="role:admin">
-  <AdminDashboard />
-</VrmGuard>
-```
-
-### SSR/SEO/MPA Support
-
-- VormiaGuardJS can be used in SSR/MPA apps by calling `canAccess` before rendering a page.
-- For MPA, redirects use `window.location.href`.
-- For SPA, React Router's `<Navigate>` is used if available.
-
----
-
-For more examples, see the [examples/](./examples/) directory.
-
----
-
-## Framework-Based Examples
-
-### React (SPA/MPA)
-
-```jsx
-import { VrmGuard } from "vormiaguardjs/src/components/VrmGuard";
-
-function AdminPage() {
-  return (
-    <VrmGuard
-      roles={["admin"]}
-      backendCheck
-      route="/admin"
-      middleware="role:admin"
-    >
-      <h1>Admin Dashboard</h1>
-    </VrmGuard>
-  );
-}
-```
-
-### Vue
-
-```js
-<script setup>
-import { useVormiaGuard } from "vormiaguardjs/src/adapters/vue/useVormiaGuard";
-const { user, isLoading, isAuthenticated } = useVormiaGuard();
-</script>
-<template>
-  <div v-if="isLoading">Loading...</div>
-  <div v-else-if="!isAuthenticated || !user.roles.includes('admin')">
-    Access Denied
-  </div>
-  <div v-else>
-    <h1>Admin Dashboard</h1>
-  </div>
-</template>
-```
-
-### Svelte
-
-```svelte
-<script>
-  import { createVormiaGuardStore } from "vormiaguardjs/src/adapters/svelte/vormiaGuardStore";
-  const { user, isLoading, isAuthenticated } = createVormiaGuardStore();
-</script>
-{#if $isLoading}
-  <p>Loading...</p>
-{:else if !$isAuthenticated || !$user?.roles?.includes('admin')}
-  <p>Access Denied</p>
-{:else}
-  <h1>Admin Dashboard</h1>
-{/if}
-```
-
-### Qwik
-
-```js
-import { useVormiaGuard } from "vormiaguardjs/src/adapters/qwik/useVormiaGuard";
-
-export default function AdminPage() {
-  const { user, isLoading, isAuthenticated } = useVormiaGuard();
-  if (isLoading.value) return <div>Loading...</div>;
-  if (!isAuthenticated() || !user.value?.roles?.includes("admin"))
-    return <div>Access Denied</div>;
-  return <h1>Admin Dashboard</h1>;
-}
-```
-
-### Astro
-
-```jsx
-import { useVormiaGuard } from "vormiaguardjs/src/adapters/astro/useVormiaGuard";
-
-export default function AdminPage() {
-  const { user, isLoading, isAuthenticated } = useVormiaGuard();
-  if (isLoading) return <div>Loading...</div>;
-  if (!isAuthenticated || !user?.roles?.includes("admin"))
-    return <div>Access Denied</div>;
-  return <h1>Admin Dashboard</h1>;
-}
-```
-
-### Solid
-
-```js
-import { createVormiaGuardResource } from "vormiaguardjs/src/adapters/solid/createVormiaGuardResource";
-
-const [user] = createVormiaGuardResource();
-
-export default function AdminPage() {
-  return (
-    <Show
-      when={user() && user().roles && user().roles.includes("admin")}
-      fallback={<div>Access Denied</div>}
-    >
-      <h1>Admin Dashboard</h1>
-    </Show>
-  );
 }
 ```
 
